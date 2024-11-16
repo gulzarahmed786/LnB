@@ -17,11 +17,11 @@ This project is designed to detect and manage damages efficiently using advanced
 ## Installation
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone repo clone gulzarahmed786/LnB
    ```
 2. Navigate to the project directory:
    ```bash
-   cd <project-directory>
+   cd  https://github.com/gulzarahmed786/LnB.git 
    ```
 3. Set up a virtual environment (optional but recommended):
    ```bash
