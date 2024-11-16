@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repair Estimate</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #FF6B6B;
+            --secondary: #4ECDC4;
+            --background: #1A1B1E;
+            --surface: #2A2B2E;
+            --text: #E4E5E7;
+            --accent: #FFE66D;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            margin: 0;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .estimate-container {
+            max-width: 1200px;
+            margin: 60px auto 0;
+            background: var(--surface);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .header {
+            text-align: left;
+            margin-bottom: 3rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin: 0;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .images-container {
+            background: var(--background);
+            padding: 1rem;
+            border-radius: 16px;
+        }
+
+        .images-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+        }
+
+        .repair-costs {
+            background: var(--background);
+            padding: 1.5rem;
+            border-radius: 16px;
+        }
+
+        .repair-costs h3 {
+            color: var(--secondary);
+            font-size: 1.5rem;
+            margin-top: 0;
+        }
+
+        table {
+            width: 100%;
+            border-spacing: 0;
+            margin-top: 1.5rem;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        th {
+            color: var(--accent);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            letter-spacing: 0.05em;
+        }
+
+        .total-cost {
+            background: var(--primary);
+            color: var(--background);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .print-button {
+            background: var(--secondary);
+            color: var(--background);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: block;
+            margin: 2rem auto 0;
+            width: auto;
+        }
+
+        .print-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(78, 205, 196, 0.3);
+        }
+
+        .nav-buttons {
+            position: fixed;
+            top: 1.5rem;
+            left: 1.5rem;
+            right: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            z-index: 1000;
+        }
+
+        .nav-button {
+            background: var(--surface);
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .nav-button i {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .nav-button:hover {
+            background: var(--primary);
+        }
+
+        .nav-button:hover i {
+            color: var(--background);
+        }
+
+        .profile-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 0.5rem;
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 0.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            display: none;
+        }
+
+        .user-profile:hover .profile-dropdown {
+            display: block;
+        }
+
+        .profile-dropdown a {
+            color: var(--text);
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            display: block;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+
+        .profile-dropdown a:hover {
+            background: var(--background);
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .estimate-container {
+                padding: 1rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+            
+            .estimate-container {
+                box-shadow: none;
+                background: white;
+            }
+
+            .nav-buttons, .print-button {
+                display: none;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .images-container, .repair-costs {
+                background: white;
+                border: 1px solid #ccc;
+            }
+
+            th, td {
+                border-bottom: 1px solid #ccc;
+            }
+
+            .total-cost {
+                border: 2px solid #ccc;
+                color: black;
+                background: white;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-buttons">
+        <a href="/" class="nav-button">
+            <i class="fas fa-home"></i>
+        </a>
+        <!-- <div class="user-profile">
+            <button class="nav-button">
+                <i class="fas fa-user-circle"></i>
+            </button>
+            <div class="profile-dropdown">
+                <a href="/view_profile">View Profile</a>
+                <a href="/dashboard">Dashboard</a>
+                <a href="/logout">Logout</a>
+            </div>
+        </div> -->
+    </div>
+    <div class="estimate-container">
+            <div class="header">
+                <h2>Damage Assessment Report</h2>
+            </div>
+    
+            <div class="content-grid">
+                <div class="images-container">
+                    <div class="image-box">
+                        <h3>Original Image</h3>
+                        <img src="{{ url_for('static', filename=original_image) }}" alt="Original Image">
+                    </div>
+                    <div class="image-box">
+                        <h3>Detected Damage</h3>
+                        <img src="{{ url_for('static', filename=detected_image) }}" alt="Detected Image">
+                    </div>
+                </div>
+    
+                <div class="repair-costs">
+                    <h3>Cost Breakdown</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Component</th>
+                                <th>Quantity</th>
+                                <th>Unit Cost</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if part_prices %}
+                                {% for part, details in part_prices.items() %}
+                                    <tr>
+                                        <td>{{ part }}</td>
+                                        <td>{{ details['count'] }}</td>
+                                        <td>${{ "%.2f"|format(details['price']) }}</td>
+                                        <td>${{ "%.2f"|format(details['total']) }}</td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="4">No price information available</td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+    
+                    {% if part_prices %}
+                        <div class="total-cost">
+                            <h3>Final Estimate: ${{ "%.2f"|format(part_prices.values()|map(attribute='total')|sum) }}</h3>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </body>
+    </html>
